@@ -327,4 +327,62 @@ Download our brochure
 </a>
 </div>
 </section>
+<a id="wa-header-icon" href="https://wa.me/351915635766?text=Hello%20Yariv%2C%20I%27d%20like%20to%20arrange%20a%20viewing%20of%20Casa%20no%20Monte." target="_blank" rel="noopener" aria-label="Arrange a viewing via WhatsApp" title="Arrange a viewing via WhatsApp" style="position:fixed;z-index:40;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.2);transition:transform .18s ease;visibility:hidden;">
+<svg viewBox="0 0 32 32" fill="#ffffff"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.695 4.611 1.897 6.484L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm6.49 17.09c-.276.777-1.366 1.423-2.24 1.61-.595.126-1.372.226-3.99-.857-3.347-1.386-5.5-4.77-5.665-4.99-.16-.22-1.354-1.803-1.354-3.44 0-1.636.858-2.44 1.163-2.775.276-.303.6-.379.8-.379.2 0 .4.002.575.01.185.008.433-.07.677.517.276.664.938 2.3 1.02 2.468.083.166.14.36.028.58-.11.22-.166.36-.33.554-.166.194-.35.434-.5.583-.166.166-.34.346-.146.68.194.334.862 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.674 1.646.334.166.53.14.726-.083.194-.222.83-.97 1.05-1.303.222-.334.444-.278.75-.166.305.11 1.94.916 2.274 1.083.333.166.554.25.636.39.083.14.083.8-.194 1.576z"/></svg>
+</a>
+<script>
+(function(){
+  function getIconSize(){
+    var w = window.innerWidth;
+    if (w <= 480) return 30;
+    if (w <= 650) return 32;
+    if (w <= 1200) return 34;
+    return 40;
+  }
+  function position(){
+    var cta = document.querySelector('.header-cta');
+    var actions = cta ? cta.closest('.header-actions') : cta;
+    var brand = document.querySelector('.header .brand');
+    var icon = document.getElementById('wa-header-icon');
+    if (!actions || !brand || !icon) return;
+
+    var size = getIconSize();
+    icon.style.width = size + 'px';
+    icon.style.height = size + 'px';
+    var svg = icon.querySelector('svg');
+    var g = Math.round(size * 0.55);
+    svg.setAttribute('width', g);
+    svg.setAttribute('height', g);
+
+    var brandRect = brand.getBoundingClientRect();
+    var actionsRect = actions.getBoundingClientRect();
+    var gap = actionsRect.left - brandRect.right;
+    var needed = size + 8;
+
+    if (actionsRect.width > 0 && gap >= needed) {
+      icon.style.top = (actionsRect.top + actionsRect.height / 2 - size / 2) + 'px';
+      icon.style.left = (actionsRect.left - size - 8) + 'px';
+      icon.style.right = 'auto';
+      icon.style.bottom = 'auto';
+    } else {
+      icon.style.top = 'auto';
+      icon.style.left = 'auto';
+      icon.style.right = '16px';
+      icon.style.bottom = '16px';
+    }
+    icon.style.visibility = 'visible';
+  }
+  function tryInit(attempts){
+    var cta = document.querySelector('.header-cta');
+    if (cta) { position(); }
+    else if (attempts < 40) { setTimeout(function(){ tryInit(attempts + 1); }, 150); }
+  }
+  window.addEventListener('resize', position);
+  window.addEventListener('scroll', position);
+  var icon = document.getElementById('wa-header-icon');
+  icon.addEventListener('mouseenter', function(){ this.style.transform = 'scale(1.08)'; });
+  icon.addEventListener('mouseleave', function(){ this.style.transform = 'scale(1)'; });
+  tryInit(0);
+})();
+</script>
 </body></html>
